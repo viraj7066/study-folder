@@ -1,0 +1,101 @@
+create file lexer.l
+
+%{
+#include <stdio.h>
+#include <stdlib.h>
+
+void yyerror(const char *s);
+%}
+
+digit                [0-9]
+letter               [a-zA-Z]
+identifier           {letter}({letter}|{digit}|_)
+keyword              "int"|"float"|"char"|"void"|"if"|"else"|"for"|"while"|"return"
+operator             "+"|"-"|"*"|"/"|"="|"=="|"!="|"<"|">"|"<="|">="
+separator            ";"|","|"\("|\)|"\{"|"\}"
+comment              "//".*|"/\*[^*]*\*+([^/*][^*]*\*+/)?"
+whitespace           [ \t]+
+newline              \n
+string               \"([^\\\"\n]|\\.)*\"
+
+%% 
+
+{identifier}        { printf("ID: %s\n", yytext); }
+{keyword}           { printf("KEYWORD: %s\n", yytext); }
+{digit}            { printf("NUMBER: %s\n", yytext); }
+{operator}          { printf("OPERATOR: %s\n", yytext); }
+{separator}         { printf("SEPARATOR: %s\n", yytext); }
+{comment}           { /* Ignore comments */ }
+{whitespace}        { /* Ignore whitespace */ }
+{newline}           { printf("NEW LINE\n"); }
+{string}            { printf("STRING: %s\n", yytext); }
+.                   { printf("ERROR: Unrecognized character: %s\n", yytext); }
+
+%% 
+
+void yyerror(const char *s) {
+    fprintf(stderr, "Error: %s\n", s);
+}
+
+int main() {
+    printf("Enter your C code (end with Ctrl+D):\n");
+    yylex(); // Call the lexer
+    return 0;
+}
+
+
+
+ give commands
+ 1.flex lexer.l
+ 2.gcc lex.yy.c -o lexer -lfl
+ 3. ./lexer
+ output 
+
+
+Enter your C code (end with Ctrl+D):
+int a = 10;
+float b = 20.5;
+if (a < b) {
+    printf("a is less than b");
+}
+// This is a comment
+
+
+
+
+KEYWORD: int
+ERROR: Unrecognized character: a
+OPERATOR: =
+NUMBER: 1
+NUMBER: 0
+SEPARATOR: ;
+NEW LINE
+KEYWORD: float
+ERROR: Unrecognized character: b
+OPERATOR: =
+NUMBER: 2
+NUMBER: 0
+ERROR: Unrecognized character: .
+NUMBER: 5
+SEPARATOR: ;
+NEW LINE
+ID: if
+SEPARATOR: (
+ERROR: Unrecognized character: a
+OPERATOR: <
+ERROR: Unrecognized character: b
+SEPARATOR: )
+SEPARATOR: {
+NEW LINE
+ID: pr
+KEYWORD: int
+ERROR: Unrecognized character: f
+SEPARATOR: (
+STRING: "a is less than b"
+SEPARATOR: )
+SEPARATOR: ;
+NEW LINE
+SEPARATOR: }
+NEW LINE
+NEW LINE
+

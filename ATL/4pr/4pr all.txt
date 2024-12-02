@@ -1,0 +1,7 @@
+download R from this link : https://cran.r-project.org/bin/windows/base/R-4.4.2-win.exe
+
+download R studio from this: https://download1.rstudio.org/electron/windows/RStudio-2024.09.1-394.exe
+
+open console of r studio and give command : install.packages("shiny")
+
+open app.R file in r studio and run 

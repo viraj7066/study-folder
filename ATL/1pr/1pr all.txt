@@ -1,0 +1,3 @@
+import this users.sql file at phpmyadmin and create the database 
+now in url paste this 
+http://localhost/1pr/register.html

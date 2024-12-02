@@ -1,0 +1,35 @@
+install.packages("shiny")
+library(shiny)
+
+ui <- fluidPage()
+server <- function(input, output) {}
+shinyApp(ui = ui, server = server)
+
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel(title = "Project on R"),
+  sidebarLayout(
+    sidebarPanel("Sidebar panel..."),
+    mainPanel("Main panel...")
+  )
+)
+
+server <- function(input, output) {}
+
+shinyApp(ui = ui, server = server)
+
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel(title = "Project On R"),
+  sidebarLayout(
+    position = "right",
+    sidebarPanel("Sidebar panel..."),
+    mainPanel("Main panel...")
+  )
+)
+
+server <- function(input, output) {}
+
+shinyApp(ui = ui, server = server)

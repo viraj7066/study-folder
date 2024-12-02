@@ -1,0 +1,96 @@
+create lexer.l
+%{
+#include "parser.tab.h"
+int yylex();
+%}
+
+%%
+
+"0"      { return ZERO; }
+"1"      { return ONE; }
+[\n]     { return NL; }
+[ \t]+   ;
+.        { }
+
+%%
+
+int yywrap() {
+    return 1;
+}
+
+
+
+
+create parser.y
+
+
+%{
+#include <stdio.h>
+#include <stdlib.h>
+int flag = 0;
+void yyerror(const char *s);
+%}
+
+%token ONE ZERO NL
+
+%%
+
+// Grammar rules
+str1:
+    str2 n1 { }
+;
+
+str2:
+    ZERO str2 ONE { }
+  | ZERO ONE { }
+;
+
+n1:
+    NL { 
+        if (flag == 0) {
+            printf("\nThe string is accepted.\n");
+        }
+        return 0; 
+    }
+;
+
+// Catch-all for any invalid patterns
+%%
+int main() {
+    printf("Enter string (any combination of 0 and 1):\n");
+    yyparse();
+    if (flag == 0) {
+        printf("\nThe string is valid for L=[0^n1^n].\n");
+    }
+    return 0;
+}
+
+void yyerror(const char *s) {
+    printf("\nEntered arithmetic is invalid for L=[0^n1^n]: %s\n\n", s);
+    flag = 1;
+}
+
+
+
+commands on terminal
+
+ 1)flex lexer.l
+ 2)bison -d parser.y
+ 3)gcc lex.yy.c parser.tab.c -o parser -lfl
+ 4)./parser
+
+
+output:
+
+Enter string (any combination of 0 and 1):
+0101
+
+Entered arithmetic is invalid for L=[0^n1^n]: syntax error
+
+Enter string (any combination of 0 and 1):
+0011
+
+The string is accepted.
+
+The string is valid for L=[0^n1^n].
+
