@@ -5,3 +5,5 @@ download R studio from this: https://download1.rstudio.org/electron/windows/RStu
 open console of r studio and give command : install.packages("shiny")
 
 open app.R file in r studio and run 
+
+Ctrl 2
