@@ -2,39 +2,38 @@ library(shiny)
 
 # UI Section
 ui <- fluidPage(
-  titlePanel("Enhanced Project on R"),
-  
-  sidebarLayout(
-    sidebarPanel(
-      h3("Sidebar Panel"),
-      selectInput("color", "Pick a color:", 
-                  choices = c("Red", "Blue", "Green")),
-      numericInput("value", "Enter a number:", value = 5, min = 1, max = 100)
-    ),
-    mainPanel(
-      h3("Main Panel"),
-      textOutput("selectedColor"),
-      textOutput("enteredValue")
-    )
+  # Title Panel
+  titlePanel(
+    div(style = "color: white; background-color: #2C3E50; padding: 10px; border-radius: 5px;",
+        h1("First R Project", style = "text-align: center;"))
   ),
   
-  # Add some light CSS for a better look
-  tags$head(
-    tags$style(HTML("
-      body { font-family: 'Arial', sans-serif; background-color: #f9f9f9; }
-      .title-panel { text-align: center; color: #4CAF50; }
-      .sidebar-panel, .main-panel { margin-top: 10px; padding: 10px; }
-    "))
+  # Sidebar Layout
+  sidebarLayout(
+    sidebarPanel(
+      style = "background-color: #E8F6F3; border-radius: 10px; padding: 15px;",
+      h3("Sidebar Panel", style = "color: #16A085; text-align: center;"),
+      selectInput("theme", "Choose a Theme:", 
+                  choices = c("Light", "Dark", "Colorful")),
+      sliderInput("slider", "Adjust Value:", min = 1, max = 100, value = 50)
+    ),
+    mainPanel(
+      style = "background-color: #FDFEFE; border: 1px solid #E5E7E9; border-radius: 10px; padding: 15px;",
+      h3("Main Panel", style = "color: #2980B9; text-align: center;"),
+      h4("Your Selections:", style = "color: #34495E; margin-top: 15px;"),
+      textOutput("themeText"),
+      textOutput("sliderValue")
+    )
   )
 )
 
 # Server Section
 server <- function(input, output) {
-  output$selectedColor <- renderText({
-    paste("You selected the color:", input$color)
+  output$themeText <- renderText({
+    paste("Selected Theme:", input$theme)
   })
-  output$enteredValue <- renderText({
-    paste("You entered the number:", input$value)
+  output$sliderValue <- renderText({
+    paste("Slider Value:", input$slider)
   })
 }
 
