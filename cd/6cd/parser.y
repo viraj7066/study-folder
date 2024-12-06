@@ -41,7 +41,7 @@ void yyerror(const char *s) {
 }
 
 int main() {
-    printf("\nEnter a binary number to check its divisibility by 3:\n");
+    printf("\nEnter a decimal number to check its divisibility by 3:\n");
     yyparse();
     return 0;
 }
