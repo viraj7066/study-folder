@@ -123,10 +123,10 @@ e = d - 2
  
  commands for terminal 
  
- 1.yacc -d your_yacc_file.y
- 2.lex your_lex_file.l
- 3.gcc lex.yy.c y.tab.c -o your_compiler -lfl
- 4. ./your_compiler
+ 1.yacc -d parser.y
+ 2.lex lexer.l
+ 3.gcc lex.yy.c y.tab.c -o my_compiler -lfl
+ 4. ./my_compiler
  5. ls -l output.asm  # Check permissions
  6. sudo apt install gedit
  7. gedit output.asm
